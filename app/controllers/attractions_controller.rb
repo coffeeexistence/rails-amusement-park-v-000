@@ -7,6 +7,13 @@ class AttractionsController < ApplicationController
     @attractions = Attraction.all
   end
 
+  def go_on
+    #binding.pry
+    new_ride=Ride.new(ride_params)
+    results=new_ride.take_ride
+    new_ride.save if results.include?("Thanks")
+    redirect_to user_path(current_user), notice: results
+  end
   # GET /attractions/1
   # GET /attractions/1.json
   def show
@@ -70,5 +77,9 @@ class AttractionsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def attraction_params
       params.require(:attraction).permit(:name, :min_height, :nausea_rating, :happiness_rating, :tickets)
+    end
+
+    def ride_params
+      params.require(:ride).permit(:user_id, :attraction_id)
     end
 end

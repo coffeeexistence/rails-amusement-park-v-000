@@ -1,0 +1,7 @@
+Log In
+
+<%=form_for(:user, url: :sessions, method: :post) do |f| %>
+<%= f.collection_select(:id, User.all, :id, :name) %>
+<%= f.submit "Sign In" %>
+
+<%end%>
